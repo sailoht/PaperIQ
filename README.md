@@ -43,3 +43,31 @@ Run the app:
 streamlit run paperiq_app.py
 ```
 Upload PDFs and test with a question or click "Summarize All Documents".
+# 📘 PaperIQ – Smart Document Assistant
+
+PaperIQ is an AI-powered assistant that helps you understand your documents intelligently.  
+Upload multiple files, ask natural questions, and get instant answers or summaries — all locally and privately.
+
+---
+
+### 🚀 Features
+- 📄 Supports PDF, TXT, and DOCX formats  
+- 💬 Conversational Q&A with documents  
+- 🧠 One-click auto summarization  
+- 🔐 Works locally (PrivateGPT inspired)  
+- 🌐 Built using LangChain, Streamlit, and OpenAI  
+
+---
+
+### ⚙️ Setup
+```bash
+pip install -r requirements.txt
+streamlit run paperiq_app.py
+````
+### 🧭 LangFlow Visual Workflow
+You can import `paperiq_langflow.json` into [LangFlow](https://www.langflow.org/) to see the visual pipeline:
+- Document ingestion
+- Text chunking
+- Embedding generation
+- Vector storage & retrieval
+- LLM query response
