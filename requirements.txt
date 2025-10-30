@@ -1,5 +1,11 @@
-streamlit>=1.20
-langchain>=0.0.300
-openai>=0.27.0
-chromadb>=0.3.21
-PyPDF2>=3.0.0
+streamlit
+langchain
+chromadb
+openai
+tiktoken
+docx2txt
+pypdf
+pytesseract
+pandas
+pillow
+python-pptx
