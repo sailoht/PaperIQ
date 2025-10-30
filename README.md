@@ -20,3 +20,26 @@ PaperIQ is a multi-document AI assistant that lets you upload PDFs and text file
 ```bash
 git clone https://github.com/<your-username>/PaperIQ.git
 cd PaperIQ
+````
+2.Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3.Set your OpenAI API key:
+
+macOS / Linux:
+```bash
+export OPENAI_API_KEY="sk-..."
+```
+
+Windows PowerShell:
+```bash
+$env:OPENAI_API_KEY="sk-..."
+```
+
+Run the app:
+```bash
+streamlit run paperiq_app.py
+```
+Upload PDFs and test with a question or click "Summarize All Documents".
