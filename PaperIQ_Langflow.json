@@ -1,0 +1,99 @@
+{
+  "name": "PaperIQ - Smart Document Assistant",
+  "description": "LangFlow workflow for PaperIQ. Handles document ingestion, vectorization, retrieval, and LLM query answering.",
+  "nodes": [
+    {
+      "id": "1",
+      "type": "FileLoader",
+      "name": "📄 Document Loader",
+      "params": {
+        "input_type": "file",
+        "file_types": [".pdf", ".txt", ".docx"]
+      },
+      "outputs": ["documents"]
+    },
+    {
+      "id": "2",
+      "type": "TextSplitter",
+      "name": "✂️ Recursive Text Splitter",
+      "params": {
+        "chunk_size": 1000,
+        "chunk_overlap": 150
+      },
+      "inputs": {
+        "documents": "1:documents"
+      },
+      "outputs": ["split_documents"]
+    },
+    {
+      "id": "3",
+      "type": "Embeddings",
+      "name": "🧠 OpenAI Embeddings",
+      "params": {
+        "model": "text-embedding-3-small"
+      },
+      "inputs": {
+        "texts": "2:split_documents"
+      },
+      "outputs": ["embeddings"]
+    },
+    {
+      "id": "4",
+      "type": "VectorStore",
+      "name": "💾 Chroma Vector DB",
+      "params": {
+        "persist_directory": "./data/chroma_db"
+      },
+      "inputs": {
+        "embeddings": "3:embeddings"
+      },
+      "outputs": ["vectorstore"]
+    },
+    {
+      "id": "5",
+      "type": "Retriever",
+      "name": "🔍 Retriever",
+      "inputs": {
+        "vectorstore": "4:vectorstore"
+      },
+      "outputs": ["retriever"]
+    },
+    {
+      "id": "6",
+      "type": "LLM",
+      "name": "🤖 OpenAI GPT-4 Turbo",
+      "params": {
+        "temperature": 0.2,
+        "max_tokens": 800
+      },
+      "outputs": ["llm"]
+    },
+    {
+      "id": "7",
+      "type": "ConversationalRetrievalChain",
+      "name": "💬 Q&A Chain",
+      "inputs": {
+        "llm": "6:llm",
+        "retriever": "5:retriever"
+      },
+      "outputs": ["response"]
+    },
+    {
+      "id": "8",
+      "type": "UIOutput",
+      "name": "🪄 Streamlit Display",
+      "inputs": {
+        "response": "7:response"
+      }
+    }
+  ],
+  "connections": [
+    {"source": "1:documents", "target": "2:documents"},
+    {"source": "2:split_documents", "target": "3:texts"},
+    {"source": "3:embeddings", "target": "4:embeddings"},
+    {"source": "4:vectorstore", "target": "5:vectorstore"},
+    {"source": "5:retriever", "target": "7:retriever"},
+    {"source": "6:llm", "target": "7:llm"},
+    {"source": "7:response", "target": "8:response"}
+  ]
+}
